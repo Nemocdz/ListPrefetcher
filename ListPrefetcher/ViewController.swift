@@ -9,13 +9,22 @@
 import UIKit
 
 private let reuseKey = "a"
+
+enum RefreshState{
+    case header
+    case footer
+}
+
 class ViewController: UIViewController {
-    var data = [0, 1, 2, 3, 4, 5, 6]
+    var data = [Int]()
+    var isLoading = false
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .plain)
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseKey)
         tableView.rowHeight = 200
+        tableView.estimatedRowHeight = 1000
         let refreshControl = UIRefreshControl(frame: .zero)
         refreshControl.addTarget(self, action: #selector(refresh(control:)), for: .valueChanged)
         tableView.refreshControl = refreshControl
@@ -24,29 +33,45 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-        let listPrefetcher = ListPrefetcher(scrollView: tableView, dataOwner: self) { [weak self] in
-            guard let self = self else { return }
-            var last = self.data.last!
-            for _ in 0..<6 {
-                last += 1
-                self.data.append(last)
-            }
-            self.tableView.reloadData()
-        }
         
+        let listPrefetcher = ListPrefetcher(strategy: ThersHoldStrategy(), scrollView: tableView)
+        listPrefetcher.delegate = self
+        fetchData(.header)
         listPrefetcher.start()
     }
     
     @objc func refresh(control:UIRefreshControl){
-        data = [0, 1, 2, 3, 4, 5, 6]
-        tableView.reloadData()
-        control.endRefreshing()
+        fetchData(.header)
+    }
+    
+    func fetchData(_ state:RefreshState){
+        guard !isLoading else { return }
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+            switch state {
+            case .header:
+                self.data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                self.tableView.refreshControl?.endRefreshing()
+            case .footer:
+                var last = self.data.last!
+                for _ in 0..<6 {
+                    last += 1
+                    self.data.append(last)
+                }
+            }
+            self.tableView.reloadData()
+            self.isLoading = false
+        }
     }
 }
 
-extension ViewController: ListPrefetcherDataOwner {
-    func itemCount() -> Int {
+extension ViewController: ListPrefetcherDelegate {
+    func totalRowsCount() -> Int {
         return data.count
+    }
+    
+    func startFetch() {
+        fetchData(.footer)
     }
 }
 

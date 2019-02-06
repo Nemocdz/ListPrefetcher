@@ -9,39 +9,22 @@
 import UIKit
 
 class ListPrefetcher:NSObject{
-    let threshold: CGFloat
-    let column :Int
-    let fetchHandler:()->()
     @objc let scrollView:UIScrollView
-    
-    var currentPage: Int = 0
     var contentSizeObserver:NSKeyValueObservation?
     var contentOffsetObserver:NSKeyValueObservation?
-    weak var dataOwner:ListPrefetcherDataOwner?
+    weak var delegate: ListPrefetcherDelegate?
+    var strategy: ListPrefetcherStrategy
     
     public func start() {
-        contentSizeObserver = observe(\.scrollView.contentSize, options: [.new, .old]) { (_, change) in
-            guard let newSize = change.newValue, let oldSize = change.oldValue else { return }
-            
-            if newSize.height < oldSize.height {
-                self.currentPage = 0
-            }
+        contentSizeObserver = observe(\.scrollView.contentSize) { (_, _) in
+            guard let delegate = self.delegate else { return }
+            self.strategy.totalRowsCount = delegate.totalRowsCount()
         }
         
         contentOffsetObserver = observe(\.scrollView.contentOffset){ (_, _) in
-            guard let dataOwner = self.dataOwner else { return }
-            let currentOffsetY = self.scrollView.contentOffset.y + self.scrollView.frame.size.height
-            let viewRatio = currentOffsetY / self.scrollView.contentSize.height
-            
-            let totalCount = Int(ceil(CGFloat(dataOwner.itemCount()) / CGFloat(self.column)))
-            let pageCount = CGFloat(totalCount) / CGFloat(self.currentPage + 1)
-            
-            let needReadCount = pageCount * (CGFloat(self.currentPage) + self.threshold)
-            let dataThreshold = needReadCount / CGFloat(totalCount)
-            
-            if viewRatio >= dataThreshold {
-                self.currentPage += 1
-                self.fetchHandler()
+            guard self.scrollView.contentOffset.y + self.scrollView.frame.height < self.scrollView.contentSize.height else { return }
+            if self.strategy.shouldFetch(self.scrollView) {
+                self.delegate?.startFetch()
             }
         }
     }
@@ -51,15 +34,78 @@ class ListPrefetcher:NSObject{
         contentOffsetObserver?.invalidate()
     }
     
-    public init(threshold:CGFloat = 0.6, column:Int = 1, scrollView:UIScrollView, dataOwner:ListPrefetcherDataOwner, fetchHandler:@escaping ()->()) {
-        self.threshold = threshold
-        self.fetchHandler = fetchHandler
-        self.column = column
+    public init(strategy:ListPrefetcherStrategy, scrollView:UIScrollView) {
+        self.strategy = strategy
         self.scrollView = scrollView
-        self.dataOwner = dataOwner
     }
 }
 
-public protocol ListPrefetcherDataOwner:AnyObject {
-    func itemCount() -> Int
+public protocol ListPrefetcherDelegate:AnyObject {
+    func totalRowsCount() -> Int
+    func startFetch()
 }
+
+protocol ListPrefetcherStrategy {
+    var totalRowsCount: Int { get set }
+    func shouldFetch(_ scrollView: UIScrollView) -> Bool
+}
+
+struct RemainStrategy: ListPrefetcherStrategy{
+    var totalRowsCount: Int
+    
+    let remainRowsCount: Int
+    
+    func shouldFetch(_ scrollView: UIScrollView) -> Bool {
+        let rowHeight = scrollView.contentSize.height / CGFloat(totalRowsCount)
+        let needOffsetY = rowHeight * CGFloat(totalRowsCount - remainRowsCount)
+        if scrollView.contentOffset.y + scrollView.frame.size.height > needOffsetY {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    init(remainRowsCount:Int = 1) {
+        self.remainRowsCount = remainRowsCount
+        totalRowsCount = 0
+    }
+}
+
+
+struct ThersHoldStrategy: ListPrefetcherStrategy{
+    var totalRowsCount: Int{
+        willSet{
+            if newValue > totalRowsCount {
+                currentPageIndex += 1
+            } else if newValue < totalRowsCount {
+                currentPageIndex = 0
+            }
+        }
+    }
+    
+    
+    let threshold: Double
+    var currentPageIndex = 0
+    
+    func shouldFetch(_ scrollView: UIScrollView) -> Bool {
+        let viewRatio = (scrollView.contentOffset.y + scrollView.frame.size.height) / scrollView.contentSize.height
+        let perPageCount = Double(totalRowsCount) / Double(currentPageIndex + 1)
+        let needRowsCount = perPageCount * (Double(currentPageIndex) + threshold)
+        let actalThreshold = needRowsCount / Double(totalRowsCount)
+        
+        if Double(viewRatio) >= actalThreshold {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    public init(threshold:Double = 0.7) {
+        self.threshold = threshold
+        totalRowsCount = 0
+    }
+}
+
+
+
+
