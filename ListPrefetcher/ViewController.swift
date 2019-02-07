@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(tableView)
         
-        let listPrefetcher = ListPrefetcher(strategy: ThersHoldStrategy(), scrollView: tableView)
+        let listPrefetcher = ListPrefetcher(strategy: ThresholdStrategy(), scrollView: tableView)
         listPrefetcher.delegate = self
         fetchData(.header)
         listPrefetcher.start()

@@ -40,7 +40,7 @@ class ListPrefetcher:NSObject{
     }
 }
 
-public protocol ListPrefetcherDelegate:AnyObject {
+protocol ListPrefetcherDelegate:AnyObject {
     func totalRowsCount() -> Int
     func startFetch()
 }
@@ -52,7 +52,6 @@ protocol ListPrefetcherStrategy {
 
 struct RemainStrategy: ListPrefetcherStrategy{
     var totalRowsCount: Int
-    
     let remainRowsCount: Int
     
     func shouldFetch(_ scrollView: UIScrollView) -> Bool {
@@ -72,7 +71,30 @@ struct RemainStrategy: ListPrefetcherStrategy{
 }
 
 
-struct ThersHoldStrategy: ListPrefetcherStrategy{
+struct OffsetStrategy: ListPrefetcherStrategy {
+    var totalRowsCount: Int
+    let gap: Int
+    let offset: Int
+    
+    func shouldFetch(_ scrollView: UIScrollView) -> Bool {
+        let rowHeight = scrollView.contentSize.height / CGFloat(totalRowsCount)
+        let actalOffset = totalRowsCount % gap
+        let needOffsetY = actalOffset > offset ? scrollView.contentSize.height - CGFloat(actalOffset - offset) * rowHeight : scrollView.contentSize.height - CGFloat(2 * gap + offset) * rowHeight
+        if scrollView.contentOffset.y + scrollView.frame.size.height > needOffsetY {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    init(gap:Int, offset:Int) {
+        self.gap = gap
+        self.offset = offset
+        totalRowsCount = 0
+    }
+}
+
+struct ThresholdStrategy: ListPrefetcherStrategy{
     var totalRowsCount: Int{
         willSet{
             if newValue > totalRowsCount {
@@ -82,7 +104,6 @@ struct ThersHoldStrategy: ListPrefetcherStrategy{
             }
         }
     }
-    
     
     let threshold: Double
     var currentPageIndex = 0
