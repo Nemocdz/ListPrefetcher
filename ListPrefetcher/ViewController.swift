@@ -66,7 +66,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: ListPrefetcherDelegate {
-    func totalRowsCount() -> Int {
+    var totalRowsCount: Int {
         return data.count
     }
     
