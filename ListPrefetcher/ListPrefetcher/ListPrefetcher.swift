@@ -16,17 +16,17 @@ class ListPrefetcher:NSObject{
     var strategy: ListPrefetcherStrategy
     
     public func start() {
-        contentSizeObserver = observe(\.scrollView.contentSize) { (_, _) in
-            guard let delegate = self.delegate else { return }
-            self.strategy.totalRowsCount = delegate.totalRowsCount
+        contentSizeObserver = observe(\.scrollView.contentSize) { object, _ in
+            guard let delegate = object.delegate else { return }
+            object.strategy.totalRowsCount = delegate.totalRowsCount
         }
         
-        contentOffsetObserver = observe(\.scrollView.contentOffset){ (_, _) in
-            let offsetY = self.scrollView.contentOffset.y + self.scrollView.frame.height
-            let totalHeight = self.scrollView.contentSize.height
-            guard offsetY < totalHeight  else { return }
-            if self.strategy.shouldFetch(totalHeight, offsetY) {
-                self.delegate?.startFetch()
+        contentOffsetObserver = observe(\.scrollView.contentOffset) { object, _ in
+            let offsetY = object.scrollView.contentOffset.y + object.scrollView.frame.height
+            let totalHeight = object.scrollView.contentSize.height
+            guard offsetY < totalHeight else { return }
+            if object.strategy.shouldFetch(totalHeight, offsetY) {
+                object.delegate?.startFetch()
             }
         }
     }
@@ -39,6 +39,7 @@ class ListPrefetcher:NSObject{
     public init(strategy:ListPrefetcherStrategy, scrollView:UIScrollView) {
         self.strategy = strategy
         self.scrollView = scrollView
+        super.init()
     }
 }
 
