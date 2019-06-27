@@ -30,14 +30,27 @@ class ViewController: UIViewController {
         tableView.refreshControl = refreshControl
         return tableView
     }()
+    
+    lazy var listPrefetcher: ListPrefetcher = {
+        let listPrefetcher = ListPrefetcher(strategy: ThresholdStrategy(), scrollView: tableView)
+        listPrefetcher.delegate = self
+        return listPrefetcher
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-        
-        let listPrefetcher = ListPrefetcher(strategy: ThresholdStrategy(), scrollView: tableView)
-        listPrefetcher.delegate = self
         fetchData(.header)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         listPrefetcher.start()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        listPrefetcher.stop()
     }
     
     @objc func refresh(control:UIRefreshControl){
