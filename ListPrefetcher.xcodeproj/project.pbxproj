@@ -13,6 +13,9 @@
 		DA5B31C32201577D00FFBE35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5B31C22201577D00FFBE35 /* Assets.xcassets */; };
 		DA5B31C62201577D00FFBE35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5B31C42201577D00FFBE35 /* LaunchScreen.storyboard */; };
 		DA5B31CF220157CC00FFBE35 /* ListPrefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B31CE220157CC00FFBE35 /* ListPrefetcher.swift */; };
+		DA97CB0322EA96F400CF4154 /* OffsetStrategy copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97CB0022EA96F300CF4154 /* OffsetStrategy copy.swift */; };
+		DA97CB0422EA96F400CF4154 /* RemainStrategy copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97CB0122EA96F300CF4154 /* RemainStrategy copy.swift */; };
+		DA97CB0522EA96F400CF4154 /* ThresholdStrategy copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97CB0222EA96F300CF4154 /* ThresholdStrategy copy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		DA5B31C52201577D00FFBE35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA5B31C72201577D00FFBE35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA5B31CE220157CC00FFBE35 /* ListPrefetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrefetcher.swift; sourceTree = "<group>"; };
+		DA97CB0022EA96F300CF4154 /* OffsetStrategy copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OffsetStrategy copy.swift"; sourceTree = "<group>"; };
+		DA97CB0122EA96F300CF4154 /* RemainStrategy copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemainStrategy copy.swift"; sourceTree = "<group>"; };
+		DA97CB0222EA96F300CF4154 /* ThresholdStrategy copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ThresholdStrategy copy.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +76,9 @@
 		DA5B31CD2201578800FFBE35 /* ListPrefetcher */ = {
 			isa = PBXGroup;
 			children = (
+				DA97CB0022EA96F300CF4154 /* OffsetStrategy copy.swift */,
+				DA97CB0122EA96F300CF4154 /* RemainStrategy copy.swift */,
+				DA97CB0222EA96F300CF4154 /* ThresholdStrategy copy.swift */,
 				DA5B31CE220157CC00FFBE35 /* ListPrefetcher.swift */,
 			);
 			path = ListPrefetcher;
@@ -147,7 +156,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA97CB0522EA96F400CF4154 /* ThresholdStrategy copy.swift in Sources */,
 				DA5B31BE2201577C00FFBE35 /* ViewController.swift in Sources */,
+				DA97CB0422EA96F400CF4154 /* RemainStrategy copy.swift in Sources */,
+				DA97CB0322EA96F400CF4154 /* OffsetStrategy copy.swift in Sources */,
 				DA5B31BC2201577C00FFBE35 /* AppDelegate.swift in Sources */,
 				DA5B31CF220157CC00FFBE35 /* ListPrefetcher.swift in Sources */,
 			);
