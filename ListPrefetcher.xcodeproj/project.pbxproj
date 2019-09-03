@@ -7,18 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BAC7CC74231DFDC3008B416A /* OffsetStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC7CC71231DFDC3008B416A /* OffsetStrategy.swift */; };
+		BAC7CC75231DFDC3008B416A /* RemainStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC7CC72231DFDC3008B416A /* RemainStrategy.swift */; };
+		BAC7CC76231DFDC3008B416A /* ThresholdStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC7CC73231DFDC3008B416A /* ThresholdStrategy.swift */; };
 		DA5B31BC2201577C00FFBE35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B31BB2201577C00FFBE35 /* AppDelegate.swift */; };
 		DA5B31BE2201577C00FFBE35 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B31BD2201577C00FFBE35 /* ViewController.swift */; };
 		DA5B31C12201577C00FFBE35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5B31BF2201577C00FFBE35 /* Main.storyboard */; };
 		DA5B31C32201577D00FFBE35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5B31C22201577D00FFBE35 /* Assets.xcassets */; };
 		DA5B31C62201577D00FFBE35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5B31C42201577D00FFBE35 /* LaunchScreen.storyboard */; };
 		DA5B31CF220157CC00FFBE35 /* ListPrefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B31CE220157CC00FFBE35 /* ListPrefetcher.swift */; };
-		DA97CB0322EA96F400CF4154 /* OffsetStrategy copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97CB0022EA96F300CF4154 /* OffsetStrategy copy.swift */; };
-		DA97CB0422EA96F400CF4154 /* RemainStrategy copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97CB0122EA96F300CF4154 /* RemainStrategy copy.swift */; };
-		DA97CB0522EA96F400CF4154 /* ThresholdStrategy copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97CB0222EA96F300CF4154 /* ThresholdStrategy copy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BAC7CC71231DFDC3008B416A /* OffsetStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetStrategy.swift; sourceTree = "<group>"; };
+		BAC7CC72231DFDC3008B416A /* RemainStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemainStrategy.swift; sourceTree = "<group>"; };
+		BAC7CC73231DFDC3008B416A /* ThresholdStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdStrategy.swift; sourceTree = "<group>"; };
 		DA5B31B82201577C00FFBE35 /* ListPrefetcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ListPrefetcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5B31BB2201577C00FFBE35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA5B31BD2201577C00FFBE35 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -27,9 +30,6 @@
 		DA5B31C52201577D00FFBE35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA5B31C72201577D00FFBE35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA5B31CE220157CC00FFBE35 /* ListPrefetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrefetcher.swift; sourceTree = "<group>"; };
-		DA97CB0022EA96F300CF4154 /* OffsetStrategy copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OffsetStrategy copy.swift"; sourceTree = "<group>"; };
-		DA97CB0122EA96F300CF4154 /* RemainStrategy copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemainStrategy copy.swift"; sourceTree = "<group>"; };
-		DA97CB0222EA96F300CF4154 /* ThresholdStrategy copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ThresholdStrategy copy.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,9 +76,9 @@
 		DA5B31CD2201578800FFBE35 /* ListPrefetcher */ = {
 			isa = PBXGroup;
 			children = (
-				DA97CB0022EA96F300CF4154 /* OffsetStrategy copy.swift */,
-				DA97CB0122EA96F300CF4154 /* RemainStrategy copy.swift */,
-				DA97CB0222EA96F300CF4154 /* ThresholdStrategy copy.swift */,
+				BAC7CC71231DFDC3008B416A /* OffsetStrategy.swift */,
+				BAC7CC72231DFDC3008B416A /* RemainStrategy.swift */,
+				BAC7CC73231DFDC3008B416A /* ThresholdStrategy.swift */,
 				DA5B31CE220157CC00FFBE35 /* ListPrefetcher.swift */,
 			);
 			path = ListPrefetcher;
@@ -156,11 +156,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA97CB0522EA96F400CF4154 /* ThresholdStrategy copy.swift in Sources */,
 				DA5B31BE2201577C00FFBE35 /* ViewController.swift in Sources */,
-				DA97CB0422EA96F400CF4154 /* RemainStrategy copy.swift in Sources */,
-				DA97CB0322EA96F400CF4154 /* OffsetStrategy copy.swift in Sources */,
+				BAC7CC74231DFDC3008B416A /* OffsetStrategy.swift in Sources */,
+				BAC7CC75231DFDC3008B416A /* RemainStrategy.swift in Sources */,
 				DA5B31BC2201577C00FFBE35 /* AppDelegate.swift in Sources */,
+				BAC7CC76231DFDC3008B416A /* ThresholdStrategy.swift in Sources */,
 				DA5B31CF220157CC00FFBE35 /* ListPrefetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
